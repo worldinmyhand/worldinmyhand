@@ -1,0 +1,49 @@
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <body bgcolor="#cccccc">
+  <title>研究專題</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+
+<body>
+
+<!-- Sidebar -->
+<div class="w3-sidebar w3-bar-block w3-border-right w3-animate-left" style="display:none" id="mySidebar">
+  <button onclick="w3_close()" class="w3-bar-item w3-large">關閉 &times;</button>
+  <a href="#" class="w3-bar-item w3-button">標籤列01</a>
+  <a href="#" class="w3-bar-item w3-button">標籤列02</a>
+  <a href="#" class="w3-bar-item w3-button">標籤列03</a>
+</div>
+
+<!-- Page Content -->
+<div class="w3-teal"style="font-size: 20px;">
+  <button class="w3-button w3-teal w3-xlarge" onclick="w3_open()">☰</button>
+  首頁
+</div>
+
+<div class="w3-container">
+  <center>
+    <div id="map"style="background-color:#ffedcc;width:1000px;height:400px;border-style:double;margin-top:20px;">
+      <h2 style="font-size: 72px;margin-top: 50px">地圖</h2>
+    </div>
+    <div style="background-color: #82FF82;width:700px;height:200px;border:3px white dashed;margin-top:20px;">
+      <h2 style="font-size: 72px;margin-top: 50px">數據或資料</h2>
+    </div>
+  </center>
+  <br>
+</div>
+
+<script type="text/javascript">
+  function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+  }
+
+  function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+  }
+</script>
+     
+</body>
+</html> 

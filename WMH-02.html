@@ -1,0 +1,151 @@
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <body bgcolor="#cccccc">
+  <title>HOLD住全世界</title>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="D:\World in My Hand\leaflet\leaflet.css" />
+  <script src="D:\World in My Hand\leaflet\leaflet.js"></script>
+  <style type="text/css">
+    #map
+    {
+      width:1696px;
+      height:796px;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Sidebar -->
+<div class="w3-sidebar w3-bar-block w3-border-right w3-animate-left" style="display:none" id="mySidebar">
+  <button onclick="w3_close()" class="w3-bar-item w3-large">關閉 &times;</button>
+  <a href="#" class="w3-bar-item w3-button">標籤列01</a>
+  <a href="#" class="w3-bar-item w3-button">標籤列02</a>
+  <a href="#" class="w3-bar-item w3-button">標籤列03</a>
+</div>
+
+<!-- Page Content -->
+<div class="w3-teal"style="font-size: 20px;">
+  <button class="w3-button w3-teal w3-xlarge" onclick="w3_open()">☰</button>
+  首頁
+</div>
+
+<div class="w3-container">
+  <center>
+    <div id="map"style="width:1700px;height:800px;border-style:double;margin-top:20px;">
+
+    </div>
+    <div style="background-color: #82FF82;width:700px;height:200px;border:3px white dashed;margin-top:20px;">
+      <h2 style="font-size: 72px;margin-top: 50px">數據或資料</h2>
+    </div>
+  </center>
+  <br>
+</div>
+
+<script type="text/javascript">
+  function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+  }
+  function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+  }
+  var map = L.map('map');//建立地圖
+  map.setView(new L.LatLng(23.862,120.830), 7);//設定經緯度
+  //設定圖資來源
+  var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+  var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 16});
+  map.addLayer(osm);
+
+  var marker = L.marker([23.9036489,121.0793433]).addTo(map);
+  marker.bindPopup("<strong>這是(很危險的)臺灣</strong>");
+  var circle = L.circle(
+    [23.9036489,121.0793433],  // 圓心座標
+    40000,                       // 半徑（公尺）
+    {
+      color: 'red',             // 線條顏色
+      fillColor: '#f03',        // 填充顏色
+      fillOpacity: 0.5          // 透明度
+    }
+  ).addTo(map);
+  var marker01 = L.marker([25.0339639, 121.5622835]).addTo(map);
+  marker01.bindPopup("<strong>臺北101大樓</strong>");
+  var circle01 = L.circle(
+    [25.0339639, 121.5622835],  // 圓心座標
+    1000,                       // 半徑（公尺）
+    {
+      color: 'red',             // 線條顏色
+      fillColor: '#f03',        // 填充顏色
+      fillOpacity: 0.5          // 透明度
+    }
+  ).addTo(map);
+  var marker02 = L.marker([22.6116633, 120.2981485]).addTo(map);
+  marker02.bindPopup("<strong>高雄85大樓</strong>");
+  var circle02 = L.circle(
+    [22.6116633, 120.2981485],  // 圓心座標
+    1000,                       // 半徑（公尺）
+    {
+      color: 'red',             // 線條顏色
+      fillColor: '#f03',        // 填充顏色
+      fillOpacity: 0.5          // 透明度
+    }
+  ).addTo(map);
+  var marker03 = L.marker([25.1456267,121.7955447]).addTo(map);
+  marker03.bindPopup("<strong>忘幽谷</strong>");
+  var circle03 = L.circle(
+    [25.1456267,121.7955447],  // 圓心座標
+    1000,                       // 半徑（公尺）
+    {
+      color: 'red',             // 線條顏色
+      fillColor: '#f03',        // 填充顏色
+      fillOpacity: 0.5          // 透明度
+    }
+  ).addTo(map);
+  var marker04 = L.marker([24.0784928, 120.5466324]).addTo(map);
+  marker04.bindPopup("<strong>八卦山大佛風景區</strong>");
+  var circle04 = L.circle(
+    [24.0784928, 120.5466324],  // 圓心座標
+    1000,                       // 半徑（公尺）
+    {
+      color: 'red',             // 線條顏色
+      fillColor: '#f03',        // 填充顏色
+      fillOpacity: 0.5          // 透明度
+    }
+  ).addTo(map);
+  var marker05 = L.marker([23.1261358, 121.4216802]).addTo(map);
+  marker05.bindPopup("<strong>三仙台</strong>");
+  var circle05 = L.circle(
+    [23.1261358, 121.4216802],  // 圓心座標
+    1000,                       // 半徑（公尺）
+    {
+      color: 'red',             // 線條顏色
+      fillColor: '#f03',        // 填充顏色
+      fillOpacity: 0.5          // 透明度
+    }
+  ).addTo(map);
+  var marker06 = L.marker([21.9483357, 120.7775629]).addTo(map);
+  marker06.bindPopup("<strong>墾丁國家公園</strong>");
+  var circle06 = L.circle(
+    [21.9483357, 120.7775629],  // 圓心座標
+    1000,                       // 半徑（公尺）
+    {
+      color: 'red',             // 線條顏色
+      fillColor: '#f03',        // 填充顏色
+      fillOpacity: 0.5          // 透明度
+    }
+  ).addTo(map);
+  var marker07 = L.marker([23.2202599,119.4447246]).addTo(map);
+  marker07.bindPopup("<strong>澎湖雙心石滬</strong>");
+  var circle07 = L.circle(
+    [23.2202599,119.4447246],  // 圓心座標
+    1000,                       // 半徑（公尺）
+    {
+      color: 'red',             // 線條顏色
+      fillColor: '#f03',        // 填充顏色
+      fillOpacity: 0.5          // 透明度
+    }
+  ).addTo(map);
+</script>
+     
+</body>
+</html> 
