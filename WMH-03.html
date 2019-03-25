@@ -1,0 +1,293 @@
+<html lang="zh-TW">
+<head>
+	<meta charset="UTF-8">
+	<title>HOLD住全世界</title>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="D:\World in My Hand\leaflet\leaflet.css" />
+	<script src="D:\World in My Hand\leaflet\leaflet.js"></script>
+	<style type="text/css">
+		.map{
+		width:1696px;
+		height:696px;
+		}
+		.st-content {
+			height: 100%;
+		}
+		.st-content {
+			overflow-y: scroll;
+		background: #f3efe0;
+		}
+		.st-content-inner {
+			position: relative;
+		}
+		.st-container {
+			position: relative;
+			overflow: hidden;
+		}
+		.st-pusher {
+			position: relative;
+			left: 0;
+			z-index: 99;
+			-webkit-transition: -webkit-transform 0.5s;
+			transition: transform 0.5s;
+		}
+		.st-pusher::after {
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 0;
+			height: 0;
+			background: rgba(0,0,0,0.2);
+			content: '';
+			opacity: 0;
+			-webkit-transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
+			transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
+		}
+		.st-menu-open .st-pusher::after {
+			width: 100%;
+			height: 100%;
+			opacity: 1;
+			-webkit-transition: opacity 0.5s;
+			transition: opacity 0.5s;
+		}
+		.st-menu {
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 100;
+			visibility: hidden;
+			width: 300px;
+			height: 100%;
+			background: #48a770;
+			-webkit-transition: all 0.5s;
+			transition: all 0.5s;
+		}
+		.st-menu::after {
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0,0,0,0.2);
+			content: '';
+			opacity: 1;
+			-webkit-transition: opacity 0.5s;
+			transition: opacity 0.5s;
+		}
+		.st-menu-open .st-menu::after {
+			width: 0;
+			height: 0; 
+			opacity: 0;
+			-webkit-transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
+			transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
+		}
+		.st-menu ul {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		.st-menu h2 {
+			margin: 0;
+			padding: 1em;
+			color: rgba(0,0,0,0.4);
+			text-shadow: 0 0 1px rgba(0,0,0,0.1);
+			font-weight: 300;
+			font-size: 2em;
+		}
+		.st-menu ul li a {
+			display: block;
+			padding: 1em 1em 1em 1.2em;
+			outline: none;
+			box-shadow: inset 0 -1px rgba(0,0,0,0.2);
+			color: #f3efe0;
+			text-transform: uppercase;
+			text-shadow: 0 0 1px rgba(255,255,255,0.1);
+			letter-spacing: 1px;
+			font-weight: 400;
+			-webkit-transition: background 0.3s, box-shadow 0.3s;
+			transition: background 0.3s, box-shadow 0.3s;
+		}
+		.st-menu ul li:first-child a {
+			box-shadow: inset 0 -1px rgba(0,0,0,0.2), inset 0 1px rgba(0,0,0,0.2);
+		}
+		.st-menu ul li a:hover {
+			background: rgba(0,0,0,0.2);
+			box-shadow: inset 0 -1px rgba(0,0,0,0);
+			color: #fff;
+		}
+		.st-effect-9.st-container {
+			-webkit-perspective: 1500px;
+			perspective: 1500px;
+		}
+		.st-effect-9 .st-pusher {
+			-webkit-transform-style: preserve-3d;
+			transform-style: preserve-3d;
+		}
+		.st-effect-9.st-menu-open .st-pusher {
+			-webkit-transform: translate3d(0, 0, -300px);
+			transform: translate3d(0, 0, -300px);
+		}
+		.st-effect-9.st-menu {
+			opacity: 1;
+			-webkit-transform: translate3d(-100%, 0, 0);
+			transform: translate3d(-100%, 0, 0);
+		}
+		.st-effect-9.st-menu-open .st-effect-9.st-menu {
+			visibility: visible;
+			-webkit-transition: -webkit-transform 0.5s;
+			transition: transform 0.5s;
+			-webkit-transform: translate3d(0, 0, 0);
+			transform: translate3d(0, 0, 0);
+		}
+		.st-effect-9.st-menu::after {
+			display: none;
+		}
+		body {
+			background: #444;
+			color: #48a770;
+			font-weight: 300;
+			font-family: 'Lato', Calibri, Arial, sans-serif;
+		}
+		a {
+			text-decoration: none;
+			color: #48a770;
+			outline: none;
+		}
+		a:hover, a:focus {
+			color: #2c774b;
+			outline: none;
+		}
+		.codrops-header {
+			padding-top: 1em;
+			text-align: center;
+		}
+		.codrops-header h1 {
+			margin: 0;
+			font-weight: 300;
+			font-size: 48px;
+			line-height: 1.3;
+		}
+		.codrops-header span {
+			display: block;
+			font-size: 60%;
+			color: #aca89a;
+		}
+		.main {
+			max-width: 69em;
+			margin: 0 auto;
+		}
+		button {
+			border: none;
+			padding: 0.6em 1.2em;
+			background: #388a5a;
+			color: #fff;
+			font-family: 'Lato', Calibri, Arial, sans-serif;
+			font-size: 1em;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+			cursor: pointer;
+			display: inline-block;
+			margin: 3px 2px;
+			border-radius: 5px;
+		}
+		button:hover {
+			background: #2c774b;
+		}
+	</style>
+</head>
+<body>
+	<div id="st-container" class="st-container">
+		<nav class="st-menu st-effect-9" id="menu-9">
+			<h2 class="icon icon-lab">側標</h2>
+			<ul>
+				<li><a href="#">標題1</a></li>
+				<li><a href="#">標題2</a></li>
+				<li><a href="#">標題3</a></li>
+			</ul>
+		</nav>
+		<div class="st-pusher">
+			<div class="st-content">
+				<div class="st-content-inner">
+					<header class="codrops-header">
+						<h1>World in My Hand<span>HOLD住全世界</span></h1>
+					</header>
+					<div class="main clearfix">
+						<button data-effect="st-effect-9">☰</button>
+					</div>
+					<center>
+						<div id="map"style="width:1700px;height:700px;border-style:double;margin-top:20px;"></div>
+					</center>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var map = L.map('map');//建立地圖
+		map.setView(new L.LatLng(23.594,121.036), 8);//設定經緯度
+		//設定圖資來源
+		var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+		var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 16});
+		map.addLayer(osm);
+
+		var marker = L.marker([23.9036489,121.0793433]).addTo(map);
+		marker.bindPopup("<strong>這是(很危險的)臺灣</strong>");
+		var circle = L.circle(
+			[23.9036489,121.0793433],  // 圓心座標
+			40000,                       // 半徑（公尺）
+			{
+				color: 'red',             // 線條顏色
+				fillColor: '#f03',        // 填充顏色
+				fillOpacity: 0.5          // 透明度
+			}
+		).addTo(map);
+		var marker01 = L.marker([25.0339639, 121.5622835]).addTo(map);
+		marker01.bindPopup("<strong>臺北101大樓</strong>");
+		var circle01 = L.circle(
+			[25.0339639, 121.5622835],  // 圓心座標
+			1000,                       // 半徑（公尺）
+			{
+				color: 'red',             // 線條顏色
+				fillColor: '#f03',        // 填充顏色
+				fillOpacity: 0.5          // 透明度
+			}
+		).addTo(map);
+		var marker02 = L.marker([22.6116633, 120.2981485]).addTo(map);
+		marker02.bindPopup("<strong>高雄85大樓</strong>");
+		var circle02 = L.circle(
+			[22.6116633, 120.2981485],  // 圓心座標
+			1000,                       // 半徑（公尺）
+			{
+				color: 'red',             // 線條顏色
+				fillColor: '#f03',        // 填充顏色
+				fillOpacity: 0.5          // 透明度
+			}
+		).addTo(map);
+
+		var click = document.querySelectorAll('div button');
+		var menu = document.querySelector('#st-container');
+		var pusher = document.querySelector('.st-pusher');
+		var effect;
+
+		for (var i = 0; i < click.length; i++) {
+			click[i].addEventListener('click', addClass)
+		}
+
+		pusher.addEventListener('click', closeMenu);
+
+		function addClass(e) {
+  			effect = e.target.getAttribute('data-effect');
+			menu.classList.toggle(effect);
+			menu.classList.toggle('st-menu-open');
+		}
+
+		function closeMenu(el) {
+  			if (el.target.classList.contains('st-pusher')) {
+				menu.classList.toggle(effect);
+				menu.classList.toggle('st-menu-open');
+			} 
+		}
+	</script>
+</body>
+
+</html>
