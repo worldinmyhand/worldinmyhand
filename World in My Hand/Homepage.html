@@ -6,7 +6,6 @@
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<script src="https://d3js.org/d3.v3.min.js"></script>
 	<script src="https://d3js.org/topojson.v1.min.js"></script>
-	<script src="https://datamaps.github.io/scripts/datamaps.world.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
 	<style type="text/css">
 		/*Loading動畫與特效*/
@@ -349,26 +348,12 @@
 			str ="<table class=table0 cellpadding=10><tr><td>城市</td><td>顏色警示</td></tr>";
 			for (i=0;i<jsonDoc.length;i++)
 			{ 
-			str +="<tr><td>" + jsonDoc[i].County;
-			str +="</td><td>" + jsonDoc[i].Color_Alert;
+			str +="<tr><td>" + jsonDoc[i].key;
+			str +="</td><td>" + jsonDoc[i].value;
 			str +="</td></tr>";
 			}
 			str +="</table>";
 			document.getElementById("warning").innerHTML = str; 
-			}
-		function callBackdata_1(txt) {
-			//將字串轉成jsonDoc
-			var jsonDoc = JSON.parse(txt);
-			//將jsonDoc輸出成表格資料
-			str ="<table  class=table1  cellpadding=10><tr><td width=150>時間</td><td>標題</td></tr>";
-			for (i=0;i<jsonDoc.length;i++)
-			{ 
-			str +="<tr><td>" + jsonDoc[i].Time;
-			str +="</td><td>" + jsonDoc[i].Title;
-			str +="</td></tr>";
-			}
-			str +="</table>";
-			document.getElementById("travel").innerHTML = str; 
 			}
 	</script>
 </head>
@@ -377,9 +362,8 @@
 		<nav class="st-menu st-effect-9" id="menu-9"> <!--側邊標籤列-->
 			<h2 style="-webkit-user-select: none;">World in My Hand</h2>
 			<ul>
-				<li><a href="https://worldinmyhand.github.io/worldinmyhand/World in My Hand/Page1.html"target="_blank">※ 公共衛生疫情</a></li>
-				<li><a href="https://worldinmyhand.github.io/worldinmyhand/World in My Hand/Page2.html"target="_blank">※ 危險戰爭局勢</a></li>
-				<li><a href="https://worldinmyhand.github.io/worldinmyhand/World in My Hand/Page3.html"target="_blank">※ 近期抗議遊行</a></li>
+				<li><a href="Homepage.html">※ 旅遊警示</a></li>
+				<li><a href="Page1.html"target="_blank">※ 最新疫情</a></li>
 			</ul>
 		</nav>
 		<div class="st-pusher"> 
@@ -400,17 +384,18 @@
 				<div class="st-content-inner"style="z-index: 1"> <!--置頂標籤列-->
 					<header class="codrops-header">
 						<button data-effect="st-effect-9"id="btn"style="-webkit-user-select: none;">☰</button>
-						<h1><a href="https://worldinmyhand.github.io/worldinmyhand/World in My Hand/Homepage.html"><img src="logo.png"width="50"> World in My Hand<span>　HOLD住全世界</span></a></h1>
-						<h2 align="right"><a href="https://worldinmyhand.github.io/worldinmyhand/World in My Hand/About.html"target="_blank">關於我們</a></h2>
+						<h1><a href="Homepage.html"><img src="logo.png"width="50"> World in My Hand<span>　HOLD住全世界</span></a></h1>
+						<h2 align="right"><a href="About.html"target="_blank">關於我們</a></h2>
 					</header>
 				</div>
-				<div id="https://worldinmyhand.github.io/worldinmyhand/World in My Hand/Homepage.html">
-					<center style="background-color: #71a4b3;"><div id="container"style="position: relative;width: 1250px;height: 750px;color: black;z-index: 0;"></div></center>
+				<div id="Homepage.html">
+					<center style="background-color: #71a4b3;">
+						<iframe title="旅遊警示" aria-label="World choropleth map" src="https://datawrapper.dwcdn.net/3Mpdc/4/" scrolling="no" frameborder="0" style="border: none;" width="1250" height="750"></iframe>
+					</center>
 					<div style="padding-left: 100px;">
 						<p style="color: black;font-size: 40px;font-weight: 500;font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;margin-top: 0px;">
 							<ul class="ul1">
-								<li class="li"><a href="#warning"class="a1"onclick="display0()">各國旅遊警示分級</a></li>
-								<li class="li"><a href="#travel"class="a1"onclick="display1()"style="margin-left: 10px">即時旅外安全訊息</a></li>
+								<li class="li"><a href="warning"class="a1">旅遊警示</a></li>
 							</ul>
 						</p>
 					</div>
@@ -420,15 +405,8 @@
 							<p style="font-size: 40px;font-weight: 500;font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;margin-top: 0px;">
 								<div class="purple1" id="warning"></div>
 							</p>
-							<script type="text/javascript" src="https://worldinmyhand.github.io/worldinmyhand/warning.json"></script>
+							<script type="text/javascript" src="https://worldinmyhand.github.io/worldinmyhand/all.json"></script>
 						</div>
-						<div id="travel"style="display: none;">
-							<p style="font-size: 40px;font-weight: 500;font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;margin-top: 0px;">
-								<div class="purple1" id="travel"></div>
-							</p>
-							<script type="text/javascript" src="https://worldinmyhand.github.io/worldinmyhand/travel.json"></script>
-						</div>
-					</center>
 				</div>
 			</div>
 		</div>
@@ -503,25 +481,6 @@
 				menu.classList.toggle(effect);
 				menu.classList.toggle('st-menu-open');
 			} 
-		}
-
-		new Datamap({
-			element: document.getElementById('container')
-		});
-
-		function display0()
-		{
-			var x=document.getElementById("warning");
-			var y=document.getElementById("travel");
-			x.style.display="block";
-			y.style.display="none";
-		}
-		function display1()
-		{
-			var x=document.getElementById("warning");
-			var y=document.getElementById("travel");
-			x.style.display="none";
-			y.style.display="block";
 		}
 	</script>
 </body>
