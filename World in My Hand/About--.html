@@ -1,13 +1,14 @@
 <html lang="zh-TW">
 <head>
 	<meta charset="UTF-8">
-	<title>最新疫情</title>
+	<title>關於我們</title>
 	<link rel="Shortcut Icon"type="image/x-icon" href="icon.ico">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<script src="https://d3js.org/d3.v3.min.js"></script>
 	<script src="https://d3js.org/topojson.v1.min.js"></script>
 	<script src="https://datamaps.github.io/scripts/datamaps.world.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<style type="text/css">
 		/*Loading動畫與特效*/
 		h1.ld {
@@ -296,61 +297,69 @@
 			background: white;
 			color: #4682B4;
 		}
-		/*標題標籤*/
-		.ul1 .a1{
-			background-color: black;
+		.p1{
 			color: white;
-			width: 250px;
-			font-size: 25px;
-			font-weight: 100;
+			width: 340px;
+			font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;
+			font-size: 40px;
+			font-weight: 500;
 			text-align: center;
-			border: 2px solid #00000000;
+			border: solid #00000000;
 			border-radius: 15px;
 			-webkit-user-select: none;
-			float: left;
 		}
-		.ul1 .a1:hover {
-			background-color: white;
-			color: black;
-		}
-		.li{
-			list-style-type :none;
-			height: 0px;
-		}
-		/*表格*/
-		.table{
-			border-top:5px #FFD382 solid;
-			border-bottom:5px #ff8282 solid;
-			background-color: #f1efe8;
-			width: 1000px;
+		.p2{
+			font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;
+			font-size: 30px;
+			font-weight: 700;
+			line-height: 15px;
 			-webkit-user-select: none;
 		}
-		tr{
-			font-size: 20px;
-			color: black;
-			font-weight: 1000;
+		/*slide*/
+		div.panel0,div.panel1,p.flip0,p.flip1{
+			font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;
+			font-weight: 700;
+			margin:0px;
+			padding:5px;
+			border-radius: 15px;
+			border: solid #00000000;
 			-webkit-user-select: none;
 		}
-		tr:hover{
-			background: #001323;
-			color: white;
+		p.flip0 {
+			font-size: 50px;
+			background:#142e48;
+			text-align:center;
+		}
+		p.flip1 {
+			font-size: 50px;
+			background:#142e48;
+			text-align:center;
+		}
+		div.panel0 {
+			font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;
+			height:250px;
+			background:white;
+			color: black;
+			display:block;
+		}
+		div.panel1 {
+			font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;
+			height:1600px;
+			background:white;
+			display:block;
 		}
 	</style>
 	<script type="text/javascript">
-		function callBackdata(txt) {
-			//將字串轉成jsonDoc
-			var jsonDoc = JSON.parse(txt);
-			//將jsonDoc輸出成表格資料
-			str ="<table class=table cellpadding=10><tr><td width=300>國家</td><td>事件</td></tr>";
-			for (i=0;i<jsonDoc.length;i++)
-			{ 
-			str +="<tr><td>" + jsonDoc[i].Country_chin;
-			str +="</td><td>" + jsonDoc[i].Event;
-			str +="</td></tr>";
-			}
-			str +="</table>";
-			document.getElementById("health").innerHTML = str; 
-		}
+		$(document).ready(function(){
+			$(".flip0").click(function(){
+				$(".panel0").slideToggle("slow");
+			});
+		});
+		$(document).ready(function(){
+			$(".flip1").click(function(){
+				$(".panel1").slideToggle("slow");
+			});
+		});
 	</script>
 </head>
 <body>
@@ -359,13 +368,13 @@
 			<h2 style="-webkit-user-select: none;">World in My Hand</h2>
 			<ul>
 				<li><a href="Homepage.html"target="_blank">※ 旅遊警示</a></li>
-				<li><a href="Page1.html">※ 最新疫情</a></li>
+				<li><a href="Page1.html"target="_blank">※ 最新疫情</a></li>
 				<li><a href="Page2.html"target="_blank">※ 旅遊詐騙</a></li>
 			</ul>
 		</nav>
-		<div class="st-pusher">
+		<div class="st-pusher"> 
 			<div class="st-content">
-				<div class="ld-div"style="z-index: 2"> <!--Load畫面-->
+				<div class="ld-div"style="z-index: 3"> <!--Load畫面-->
 					<h1 class="ld">
 						<span class="letters">
 							<span class="words letters-left">Welcome</span>
@@ -378,19 +387,161 @@
 						</span>
 					</h1>
 				</div>
-				<div class="st-content-inner"style="z-index: 1"> <!--置頂標籤列-->
+				<div class="st-content-inner"style="z-index: 2"> <!--置頂標籤列-->
 					<header class="codrops-header">
 						<button data-effect="st-effect-9"id="btn"style="-webkit-user-select: none;">☰</button>
 						<h1><a href="Homepage.html"><img src="logo.png"width="50"> World in My Hand<span>　HOLD住全世界</span></a></h1>
-						<h2 align="right"><a href="About.html"target="_blank">關於我們</a></h2>
+						<h2 align="right"><a href="About.html">關於我們</a></h2>
 					</header>
 				</div>
-				<div id="Page1.html">
-					<div style="padding-top: 80px;"></div>
-					<center style="background-color: #83d0f7;border-radius: 15px;margin-right: 150px;margin-left: 150px">
-						<iframe title="旅遊警示" aria-label="World choropleth map" src="https://datawrapper.dwcdn.net/xM3jZ/1/" scrolling="no" frameborder="0" style="border: none;" width="1500" height="800"></iframe>
+				<div id="About.html">
+					<center style="padding-top: 80px;">
+						<div style="width: 800px;height: 100px;background-color: #2d6094;font-weight: 700;font-size: 65px;color: white;font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;-webkit-user-select: none;border-radius: 15em;">Hi World（海鷗）
+						</div>
 					</center>
-					<br>
+					<hr>
+					<!--研究目的-->
+					<p class="flip0">Research Purposes</p>
+					<div class="panel0"style="position: relative;">
+						<p style="font-size: 40px;">　　旅遊是現代人生活的一部份，而人們在出國旅遊前，需初略了解當地的時事，避免旅遊存在風險。
+						<br>　　為此我們團隊製做世界旅遊風險網站，提供各國旅遊警示、戰爭、公共衛生、抗議等最新消息，讓出國旅客有參考的依據，決定是否到當地去旅行以及避免意外發生。</p>
+					</div>
+					<hr>
+					<!--成員介紹-->
+					<p class="flip1">Member Introduction</p>
+					<div class="panel1"style="position: relative;">
+						<!--育惠-->
+						<div style="width: 30%;height: 300px;float: left;">
+							<div style="padding-top: 20px;padding-left: 40px;position: absolute;z-index: 1">
+								<img src="YH.png"width="180">
+							</div>
+							<div style="padding-top: 68px;padding-left: 150px;">
+								<p class="p1"style="margin-top: 0px;margin-bottom: 0px;background-color: #a20000;">　Project Manager </p>
+							</div>
+							<div style="padding-top: 12px;padding-left: 222px;">
+								<p style="margin-top: 0px;margin-bottom: 0px;color: white;font-size: 30px;color: #191919;position: absolute;">育惠</p>
+							</div>
+							<div style="padding-top: 7px;padding-left: 292px;">
+								<a href="https://www.facebook.com/profile.php?id=100000244419761"target="_blank">
+									<img src="fb.png"width="30">
+								</a>
+							</div>
+							<div style="padding-top: 20px;padding-left: 180px;position: absolute;">
+								<img src="01.png"width="170">
+							</div>
+						</div>
+						<div style="padding-top: 0px;padding-left: 150px;width: 98%;">
+							<br><br><br>
+							<p style="color: black;font-size: 30px;"><i>給<u>團隊</u>的期許：</i><br>　　每個人都能發揮到自己擅長的部份，並且能了解其他部門的工作內容，若有無法解決的問題，可向團隊提出，大家一起努力解決。</p>
+						</div>
+						<br>
+						<hr><hr>
+						<!--仲祐-->
+						<div style="width: 30%;height: 300px;float: left;">
+							<div style="padding-top: 20px;padding-left: 40px;position: absolute;z-index: 1">
+								<img src="ZY.png"width="170">
+							</div>
+							<div style="padding-top: 68px;padding-left: 150px;">
+								<p class="p1"style="margin-top: 0px;margin-bottom: 0px;background-color: #a20000;">　Data analyst </p>
+							</div>
+							<div style="padding-top: 12px;padding-left: 222px;">
+								<p style="margin-top: 0px;margin-bottom: 0px;color: white;font-size: 30px;color: #191919;position: absolute;">仲祐</p>
+							</div>
+							<div style="padding-top: 7px;padding-left: 292px;">
+								<a href="https://www.facebook.com/profile.php?id=100003093388158"target="_blank">
+									<img src="fb.png"width="30">
+								</a>
+							</div>
+							<div style="padding-top: 20px;padding-left: 180px;position: absolute;">
+								<img src="02.png"width="300">
+							</div>
+						</div>
+						<div style="padding-top: 0px;padding-left: 150px;width: 98%;">
+							<br><br><br>
+							<p style="color: black;font-size: 30px;"><i>給<u>團隊</u>的期許：</i><br>　　拿望遠鏡看別人，拿放大鏡看自己。</p>
+						</div>
+						<br><br>
+						<hr>
+						<!--富景-->
+						<div style="width: 30%;height: 300px;float: left;">
+							<div style="padding-top: 20px;padding-left: 40px;position: absolute;z-index: 1">
+								<img src="FJ.png"width="170">
+							</div>
+							<div style="padding-top: 68px;padding-left: 150px;">
+								<p class="p1"style="margin-top: 0px;margin-bottom: 0px;background-color: #a20000;">　Frontend </p>
+							</div>
+							<div style="padding-top: 12px;padding-left: 222px;">
+								<p style="margin-top: 0px;margin-bottom: 0px;color: white;font-size: 30px;color: #191919;position: absolute;">富景</p>
+							</div>
+							<div style="padding-top: 7px;padding-left: 292px;">
+								<a href="https://zh-tw.facebook.com/fongjing0420"target="_blank">
+									<img src="fb.png"width="30">
+								</a>
+							</div>
+							<div style="padding-top: 20px;padding-left: 180px;position: absolute;">
+								<img src="03.png"width="300">
+							</div>
+						</div>
+						<div style="padding-top: 0px;padding-left: 150px;width: 98%;">
+							<br><br><br>
+							<p style="color: black;font-size: 30px;"><i>給<u>團隊</u>的期許：</i><br>　　希望能夠持續進步，唯有大家團結分工合作，才能把像拼圖一樣完整呈現顧客的需求。</p>
+						</div>
+						<br><br>
+						<hr>
+						<!--宏怡-->
+						<div style="width: 30%;height: 300px;float: left;">
+							<div style="padding-top: 20px;padding-left: 40px;position: absolute;z-index: 1">
+								<img src="HY.png"width="170">
+							</div>
+							<div style="padding-top: 68px;padding-left: 150px;">
+								<p class="p1"style="margin-top: 0px;margin-bottom: 0px;background-color: #a20000;">　Backend </p>
+							</div>
+							<div style="padding-top: 12px;padding-left: 222px;">
+								<p style="margin-top: 0px;margin-bottom: 0px;color: white;font-size: 30px;color: #191919;position: absolute;">宏怡</p>
+							</div>
+							<div style="padding-top: 7px;padding-left: 292px;">
+								<a href="https://m.facebook.com/profile.php?id=100003888020157&refsrc=https%3A%2F%2Fwww.facebook.com%2Fprofile.php&_rdr"target="_blank">
+									<img src="fb.png"width="30">
+								</a>
+							</div>
+							<div style="padding-top: 20px;padding-left: 180px;position: absolute;">
+								<img src="04.png"width="180">
+							</div>
+						</div>
+						<div style="padding-top: 0px;padding-left: 150px;width: 98%;">
+							<br><br><br>
+							<p style="color: black;font-size: 30px;"><i>給<u>團隊</u>的期許：</i><br>　　Leave youth with no regret！</p>
+						</div>
+						<br><br>
+						<hr>
+						<!--傑雅-->
+						<div style="width: 30%;height: 300px;float: left;">
+							<div style="padding-top: 20px;padding-left: 40px;position: absolute;z-index: 1">
+								<img src="JY.png"width="170">
+							</div>
+							<div style="padding-top: 68px;padding-left: 150px;">
+								<p class="p1"style="margin-top: 0px;margin-bottom: 0px;background-color: #a20000;">　Backend </p>
+							</div>
+							<div style="padding-top: 12px;padding-left: 222px;">
+								<p style="margin-top: 0px;margin-bottom: 0px;color: white;font-size: 30px;color: #191919;position: absolute;">傑雅</p>
+							</div>
+							<div style="padding-top: 7px;padding-left: 292px;">
+								<a href="https://www.facebook.com/profile.php?id=100000693526531"target="_blank">
+									<img src="fb.png"width="30">
+								</a>
+							</div>
+							<div style="padding-top: 20px;padding-left: 180px;position: absolute;">
+								<img src="05.png"width="180">
+							</div>
+						</div>
+						<div style="padding-top: 0px;padding-left: 150px;width: 98%;">
+							<br><br><br>
+							<p style="color: black;font-size: 30px;"><i>給<u>團隊</u>的期許：</i><br>　　發現問題，然後解決問題。</p>
+						</div>
+						<br><br>
+						<hr>
+					</div>
+					<hr>
 				</div>
 			</div>
 		</div>

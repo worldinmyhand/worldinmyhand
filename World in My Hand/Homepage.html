@@ -7,6 +7,9 @@
 	<script src="https://d3js.org/d3.v3.min.js"></script>
 	<script src="https://d3js.org/topojson.v1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	<style type="text/css">
 		/*Loading動畫與特效*/
 		h1.ld {
@@ -234,6 +237,7 @@
 		a:hover, a:focus {
 			color:black;
 			outline: none;
+			text-decoration:none;
 		}
 		.codrops-header {
 			position: fixed;
@@ -322,15 +326,10 @@
 			border-bottom:5px #ff8282 solid;
 			background-color: #f1efe8;
 			width: 1000px;
-			-webkit-user-select: none;
 		}
 		tr{
 			color: black;
 			font-weight: 1000;
-		}
-		tr:hover{
-			background: #001323;
-			color: white;
 		}
 		/*Popup*/
 		.popup {
@@ -379,23 +378,219 @@
 				from {opacity: 0;}
 			to {opacity:1 ;}
 		}
-
+		/*slide*/
+		div.panel0,div.panel1,div.panel2,div.panel3,div.panel4,div.panel5,div.panel6,p.flip0,p.flip1,p.flip2,p.flip3,p.flip4,p.flip5,p.flip6{
+			font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;
+			font-weight: 700;
+			margin:0px;
+			padding:5px;
+			border-radius: 15px;
+			border: solid #00000000;
+			z-index: 2;
+			-webkit-user-select: none;
+			text-align:center;
+		}
+		p.flip0,p.flip1,p.flip2,p.flip3,p.flip4,p.flip5,p.flip6 {
+			width: 90%;
+			color: black;
+			font-size: 21px;
+		}
+		div.panel0 {
+			width: 100%;
+			font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;
+			height:250px;
+			background:#ffffffba;
+			color: black;
+			display:none;
+		}
+		div.panel1 {
+			width: 100%;
+			font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;
+			height:250px;
+			background:#ffffffba;
+			display:none;
+		}
+		div.panel2 {
+			width: 100%;
+			font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;
+			height:250px;
+			background:#ffffffba;
+			display:none;
+		}
+		div.panel3 {
+			width: 100%;
+			font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;
+			height:250px;
+			background:#ffffffba;
+			display:none;
+		}
+		div.panel4 {
+			width: 100%;
+			font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;
+			height:250px;
+			background:#ffffffba;
+			display:none;
+		}
+		div.panel5 {
+			width: 100%;
+			font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;
+			height:250px;
+			background:#ffffffba;
+			display:none;
+		}
+		div.panel6 {
+			width: 100%;
+			font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;
+			height:250px;
+			background:#ffffffba;
+			display:none;
+		}
 	</style>
 	<script type="text/javascript">
+		var jsonDoc = "";
 		function callBackdata(txt) {
+			//將字串轉成jsonDoc
+			jsonDoc = JSON.parse(txt);
+			//console.log(jsonDoc)
+			//將jsonDoc輸出成表格資料
+			str ="<table class=table cellpadding=10><tr><td width=230>時間</td><td></td><td>標題</td></tr>";
+			for (i=0;i<jsonDoc[0].Event.length;i++) {
+				str +="<tr><td>" +jsonDoc[0].Event[i].Time;
+				str +="<td><td>"+"<a "+"href="+jsonDoc[0].Event[i].Website+">"+jsonDoc[0].Event[i].Title;
+				str +="</td></tr>";
+			}
+			str +="</table>";
+			document.getElementById("Taiwan").innerHTML = str; 
+		}/*console.log(jsonDoc)(要加的)*/
+
+		/*function callBackdata(txt) {
 			//將字串轉成jsonDoc
 			var jsonDoc = JSON.parse(txt);
 			//將jsonDoc輸出成表格資料
-			str ="<table class=table cellpadding=10><tr><td width=300>國家</td><td>事件</td></tr>";
-			for (i=0;i<jsonDoc.length;i++)
-			{ 
-			str +="<tr><td>" + jsonDoc[i].Country_chin;
-			str +="</td><td>" + jsonDoc[i].Event;
-			str +="</td></tr>";
+			str ="<table class=table cellpadding=10><tr><td>事件</td></tr>";
+			for (i=1;i<2;i++)
+			{
+				str +="</td><td>" + jsonDoc[i].Event;
+				str +="</td></tr>";
 			}
 			str +="</table>";
-			document.getElementById("warning").innerHTML = str; 
-			}
+			document.getElementById("Albania").innerHTML = str; 
+		}*/
+
+		/*歐洲*/
+		$(document).ready(function(){
+			$(".flip0").mouseover(function(){
+				$(".panel0").slideDown("fast");
+			});
+			$(".flip0").mouseout(function(){
+				$(".panel0").slideUp("fast");
+			});
+			$(".panel0").mouseover(function(){
+				$(".panel0").stop();
+			});
+			$(".panel0").mouseout(function(){
+				$(".panel0").slideUp("fast");
+			});
+		});
+		/*非洲*/
+		$(document).ready(function(){
+			$(".flip1").mouseover(function(){
+				$(".panel1").slideDown("fast");
+			});
+			$(".flip1").mouseout(function(){
+				$(".panel1").slideUp("fast");
+			});
+			$(".panel1").mouseover(function(){
+				$(".panel1").stop();
+			});
+			$(".panel1").mouseout(function(){
+				$(".panel1").slideUp("fast");
+			});
+		});
+		/*亞洲*/
+		$(document).ready(function(){
+			$(".flip2").mouseover(function(){
+				$(".panel2").slideDown("fast");
+			});
+			$(".flip2").mouseout(function(){
+				$(".panel2").slideUp("fast");
+			});
+			$(".panel2").mouseover(function(){
+				$(".panel2").stop();
+			});
+			$(".panel2").mouseout(function(){
+				$(".panel2").slideUp("fast");
+			});
+		});
+		/*大洋洲*/
+		$(document).ready(function(){
+			$(".flip3").mouseover(function(){
+				$(".panel3").slideDown("fast");
+			});
+			$(".flip3").mouseout(function(){
+				$(".panel3").slideUp("fast");
+			});
+			$(".panel3").mouseover(function(){
+				$(".panel3").stop();
+			});
+			$(".panel3").mouseout(function(){
+				$(".panel3").slideUp("fast");
+			});
+		});
+		/*北美洲*/
+		$(document).ready(function(){
+			$(".flip4").mouseover(function(){
+				$(".panel4").slideDown("fast");
+			});
+			$(".flip4").mouseout(function(){
+				$(".panel4").slideUp("fast");
+			});
+			$(".panel4").mouseover(function(){
+				$(".panel4").stop();
+			});
+			$(".panel4").mouseout(function(){
+				$(".panel4").slideUp("fast");
+			});
+		});
+		/*南美洲*/
+		$(document).ready(function(){
+			$(".flip5").mouseover(function(){
+				$(".panel5").slideDown("fast");
+			});
+			$(".flip5").mouseout(function(){
+				$(".panel5").slideUp("fast");
+			});
+			$(".panel5").mouseover(function(){
+				$(".panel5").stop();
+			});
+			$(".panel5").mouseout(function(){
+				$(".panel5").slideUp("fast");
+			});
+		});
+		/*南極洲*/
+		$(document).ready(function(){
+			$(".flip6").mouseover(function(){
+				$(".panel6").slideDown("fast");
+			});
+			$(".flip6").mouseout(function(){
+				$(".panel6").slideUp("fast");
+			});
+			$(".panel6").mouseover(function(){
+				$(".panel6").stop();
+			});
+			$(".panel6").mouseout(function(){
+				$(".panel6").slideUp("fast");
+			});
+		});
+		/*Popup*/
+		function myFunction0() {
+			var popup = document.getElementById("japan");
+			popup.classList.toggle("show");
+		}
+		function myFunction1() {
+			var popup = document.getElementById("Saudi Arabia");
+			popup.classList.toggle("show");
+		}
 	</script>
 </head>
 <body>
@@ -405,11 +600,12 @@
 			<ul>
 				<li><a href="Homepage.html">※ 旅遊警示</a></li>
 				<li><a href="Page1.html"target="_blank">※ 最新疫情</a></li>
+				<li><a href="Page2.html"target="_blank">※ 旅遊詐騙</a></li>
 			</ul>
 		</nav>
 		<div class="st-pusher"> 
 			<div class="st-content">
-				<div class="ld-div"style="z-index: 2"> <!--Load畫面-->
+				<div class="ld-div"style="z-index: 3"> <!--Load畫面-->
 					<h1 class="ld">
 						<span class="letters">
 							<span class="words letters-left">Welcome</span>
@@ -422,45 +618,174 @@
 						</span>
 					</h1>
 				</div>
-				<div class="st-content-inner"style="z-index: 1"> <!--置頂標籤列-->
+				<div class="st-content-inner"style="z-index: 2;"> <!--置頂標籤列-->
 					<header class="codrops-header">
 						<button data-effect="st-effect-9"id="btn"style="-webkit-user-select: none;">☰</button>
 						<h1><a href="Homepage.html"><img src="logo.png"width="50"> World in My Hand<span>　HOLD住全世界</span></a></h1>
 						<h2 align="right"><a href="About.html"target="_blank">關於我們</a></h2>
 					</header>
 				</div>
+				<div style="padding-top: 80px;padding-bottom: 100px;position: relative;margin-left: 200px;margin-right: 200px;">
+					<div style="float: left;width: 14%;position: absolute;left: 1%;">
+						<center style="border-left: 2px black solid;border-right:2px black solid;"><p class="flip0">歐洲<br>（Europe）</p></center>
+						<div class="panel0"style="position: relative;border-top: 2px black solid;border-bottom: 2px black solid;">
+							<a onclick="display1()"><p style="font-size: 18px;">阿爾巴尼亞</p></a>
+						</div>
+					</div>
+					<div style="float: left;width: 14%;position: absolute;left: 15%;">
+						<center style="border-right:2px black solid;"><p class="flip1">非洲<br>（Africa）</p></center>
+						<div class="panel1"style="position: relative;border-top: 2px black solid;border-bottom: 2px black solid;">
+							<p style="font-size: 18px;"></p>
+						</div>
+					</div>
+					<div style="float: left;width: 14%;position: absolute;left: 29%;">
+						<center style="border-right:2px black solid;"><p class="flip2">亞洲<br>（Asia）</p></center>
+						<div class="panel2"style="position: relative;border-top: 2px black solid;border-bottom: 2px black solid;">
+							<a href="#台灣"onclick="display0()"><p style="font-size: 18px;">台灣</p></a>
+						</div>
+					</div>
+					<div style="float: left;width: 14%;position: absolute;left: 43%;">
+						<center style="border-right:2px black solid;"><p class="flip3">大洋洲<br>（Oceania）</p></center>
+						<div class="panel3"style="position: relative;border-top: 2px black solid;border-bottom: 2px black solid;">
+							<p style="font-size: 18px;"></p>
+						</div>
+					</div>
+					<div style="float: left;width: 14%;position: absolute;left: 57%;">
+						<center style="border-right:2px black solid;"><p class="flip4">北美洲<br>（North America）</p></center>
+						<div class="panel4"style="position: relative;border-top: 2px black solid;border-bottom: 2px black solid;">
+							<p style="font-size: 18px;"></p>
+						</div>
+					</div>
+					<div style="float: left;width: 14%;position: absolute;left: 71%;">
+						<center style="border-right:2px black solid;"><p class="flip5">南美洲<br>（South America）</p></center>
+						<div class="panel5"style="position: relative;border-top: 2px black solid;border-bottom: 2px black solid;">
+							<p style="font-size: 18px;"></p>
+						</div>
+					</div>
+					<div style="float: left;width: 14%;position: absolute;left: 85%;">
+						<center style="border-right:2px black solid;"><p class="flip6">南極洲<br>（Antarctica）</p></center>
+						<div class="panel6"style="position: relative;border-top: 2px black solid;border-bottom: 2px black solid;">
+							<p style="font-size: 18px;"></p>
+						</div>
+					</div>
+				</div>
 				<div id="Homepage.html">
 					<div style="position: relative;-webkit-user-select: none;">
-						<div style="z-index: 1;top:31%;left: 74.3%;position: absolute;">
-							<div class="popup" onclick="myFunction()"><img src="!!.png"width="50">
+						<div style="z-index: 1;top:25%;left: 77.5%;position: absolute;">
+							<div class="popup" onclick="myFunction0()"><img src="!!.png"width="50">
 								<span class="popuptext" id="japan">日本<br>第一級:注意<br><b>麻疹</b></span>
 							</div>
 						</div>
-						<div style="z-index: 1;top:44%;left: 59%;position: absolute;">
+						<div style="z-index: 1;top:42%;left: 61%;position: absolute;">
 							<div class="popup" onclick="myFunction1()"><img src="!!!.png"width="50">
 								<span class="popuptext" id="Saudi Arabia">沙烏地阿拉伯<br>第二級:注意<br><b>中東呼吸症候群<br>冠狀病毒感染症</b></span>
 							</div>
 						</div>
-						<center style="background-color: white;">
-							<iframe title="旅遊警示" aria-label="World choropleth map" src="https://datawrapper.dwcdn.net/Vecco/1/" scrolling="no" frameborder="0" style="border: none;" width="1250" height="900"></iframe>
+						<center style="background-color: #83d0f7;border-radius: 15px;margin-right: 150px;margin-left: 150px;">
+							<iframe title="旅遊警示" aria-label="World choropleth map" src="https://datawrapper.dwcdn.net/Y3EEY/3/" scrolling="no" frameborder="0" style="border: none;" width="1500" height="730"></iframe>
 						</center>
 					</div>
-					<div>
-						<p style="color: black;font-size: 40px;font-weight: 500;font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;margin-top: 0px;">
-							<ul class="ul1">
-								<li class="li"><a href="warning"class="a1">旅遊警示</a></li>
-							</ul>
-						</p>
+					<br>
+					<div style="padding-left: 85%;width: 50px;height: 0px;">
+						<br>
+						<a href="https://worldinmyhand.github.io/worldinmyhand/travel.json"target="_blank">
+							<div style="background-color: #337ab7;border-radius: 15px;clear: both;width: 70px;">
+								<center><p style="color: white;font-size: 24px;">Json</p></center>
+							</div>
+						</a>
 					</div>
-					<br><br><br>
-					<center>
-						<div id="warning"style="display: block;">
-							<p style="font-size: 40px;font-weight: 500;font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;margin-top: 0px;">
-								<div class="purple1" id="warning"></div>
-							</p>
-							<script type="text/javascript" src="https://worldinmyhand.github.io/worldinmyhand/travel.json"></script>
+					<div style="float: left;width: 100%;padding-left: 190px;padding-right: 190px;">
+						<div id="台灣"style="display:none;">
+							<h2 style="color: black;padding-left: 30px;font-weight: 700;">即時訊息</h2>
+							<center>
+								<p style="font-size: 40px;font-weight: 500;font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;margin-top: 0px;">
+									<div class="purple1" id="Taiwan"></div>
+								</p>
+								<script type="text/javascript" src="https://worldinmyhand.github.io/worldinmyhand/travel.json"></script>
+							</center>
+							<div style="padding-left: 30px;">
+								<br>
+								<h2 style="color: black;font-weight: 700;">犯罪指標 <a href="https://www.numbeo.com/crime/rankings_by_country.jsp"target="_blank"><img src="LG.png" width="20" title="Numbeo"></a></h2>
+								<div style="padding-right:100px;position: relative;">
+									<div class="progress"style="width:400px;position: absolute;left:50px">
+										<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="17.38" aria-valuemin="0" aria-valuemax="100" style="width:17.38%">
+										</div>
+									</div>
+									<p style="color: black;">17.38</p>
+								</div>
+								<h2 style="color: black;font-weight: 700;">生活品質 <a href="https://www.numbeo.com/quality-of-life/rankings_by_country.jsp"target="_blank"><img src="LG.png" width="20" title="Numbeo"></a></h2>
+								<div style="padding-right:100px;position: relative;">
+									<div class="progress"style="width:400px;position: absolute;left:50px">
+										<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="133.82" aria-valuemin="0" aria-valuemax="200" style="width:70%">
+										</div>
+									</div>
+									<p style="color: black;">133.82</p>
+								</div>
+								<h2 style="color: black;font-weight: 700;">空氣污染 <a href="https://www.numbeo.com/pollution/rankings_by_country.jsp"target="_blank"><img src="LG.png" width="20" title="Numbeo"></a></h2>
+								<div style="padding-right:100px;position: relative;">
+									<div class="progress"style="width:400px;position: absolute;left:50px">
+										<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="63.47" aria-valuemin="0" aria-valuemax="100" style="width:63.47%">
+										</div>
+									</div>
+									<p style="color: black;">63.47</p>
+								</div>
+								<h2 style="color: black;font-weight: 700;">醫療保健 <a href="https://www.numbeo.com/health-care/rankings_by_country.jsp"target="_blank"><img src="LG.png" width="20" title="Numbeo"></a></h2>
+								<div style="padding-right:100px;position: relative;">
+									<div class="progress"style="width:400px;position: absolute;left:50px">
+										<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="86.22" aria-valuemin="0" aria-valuemax="100" style="width:86.22%">
+										</div>
+									</div>
+									<p style="color: black;">86.22</p>
+								</div>
+							</div>
 						</div>
-					</center>
+						<div id="阿爾巴尼亞"style="display:none;">
+							<h2 style="color: black;padding-left: 30px;font-weight: 700;">即時訊息</h2>
+							<center>
+								<p style="font-size: 40px;font-weight: 500;font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;margin-top: 0px;">
+									<div class="purple1" id="Albania"></div>
+								</p>
+								<script type="text/javascript" src="https://worldinmyhand.github.io/worldinmyhand/travel.json"></script>
+							</center>
+							<div style="padding-left: 30px;">
+								<br>
+								<h2 style="color: black;font-weight: 700;">犯罪指標 <a href="https://www.numbeo.com/crime/rankings_by_country.jsp"target="_blank"><img src="LG.png" width="20" title="Numbeo"></a></h2>
+								<div style="padding-right:100px;position: relative;">
+									<div class="progress"style="width:400px;position: absolute;left:50px">
+										<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="17.38" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+										</div>
+									</div>
+									<p style="color: black;">0</p>
+								</div>
+								<h2 style="color: black;font-weight: 700;">生活品質 <a href="https://www.numbeo.com/quality-of-life/rankings_by_country.jsp"target="_blank"><img src="LG.png" width="20" title="Numbeo"></a></h2>
+								<div style="padding-right:100px;position: relative;">
+									<div class="progress"style="width:400px;position: absolute;left:50px">
+										<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="133.82" aria-valuemin="0" aria-valuemax="200" style="width:0%">
+										</div>
+									</div>
+									<p style="color: black;">0</p>
+								</div>
+								<h2 style="color: black;font-weight: 700;">空氣污染 <a href="https://www.numbeo.com/pollution/rankings_by_country.jsp"target="_blank"><img src="LG.png" width="20" title="Numbeo"></a></h2>
+								<div style="padding-right:100px;position: relative;">
+									<div class="progress"style="width:400px;position: absolute;left:50px">
+										<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="63.47" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+										</div>
+									</div>
+									<p style="color: black;">0</p>
+								</div>
+								<h2 style="color: black;font-weight: 700;">醫療保健 <a href="https://www.numbeo.com/health-care/rankings_by_country.jsp"target="_blank"><img src="LG.png" width="20" title="Numbeo"></a></h2>
+								<div style="padding-right:100px;position: relative;">
+									<div class="progress"style="width:400px;position: absolute;left:50px">
+										<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="86.22" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+										</div>
+									</div>
+									<p style="color: black;">0</p>
+								</div>
+							</div>
+						</div>
+						<br>
+					</div>
+					
 				</div>
 			</div>
 		</div>
@@ -536,13 +861,17 @@
 				menu.classList.toggle('st-menu-open');
 			} 
 		}
-		function myFunction() {
-			var popup = document.getElementById("japan");
-			popup.classList.toggle("show");
+		function display0(){
+			var x=document.getElementById("台灣")
+			var y=document.getElementById("阿爾巴尼亞")
+			x.style.display="block"
+			y.style.display="none"
 		}
-		function myFunction1() {
-			var popup = document.getElementById("Saudi Arabia");
-			popup.classList.toggle("show");
+		function display1(){
+			var x=document.getElementById("台灣")
+			var y=document.getElementById("阿爾巴尼亞")
+			x.style.display="none"
+			y.style.display="block"
 		}
 	</script>
 </body>
