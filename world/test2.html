@@ -1,73 +1,97 @@
 <html>
 <head>
 <title>BARTest</title>
+<!-- Chart.js v2.4.0 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="excanvas.min.js"></script><![endif]-->
 <script type="text/javascript" src="js/jquery-2.1.1.js"></script>    
 <script type="text/javascript" src="js/jquery.flot.js"></script>    
 <script type="text/javascript" src="js/jquery.flot.symbol.js"></script>
 <script type="text/javascript" src="js/jquery.flot.tooltip.min.js"></script>
+
+
 </head>
+<style>
+
+</style>
+
 <body>
 <h2>近一個月資料</h2>
 <h3>台灣</h3>
 <div  id="bar_台灣" style="width:400px;height:300px"></div>
+
 <h3>阿爾巴尼亞</h3>
 <div  id="bar_阿爾巴尼亞" style="width:400px;height:300px"></div>
+
 <h3>阿爾及利亞</h3>
 <div  id="bar_阿爾及利亞" style="width:400px;height:300px"></div>
-<div  id="bar_安哥拉" style="width:400px;height:300px"></div>
+
+
+
 <script type="text/javascript">
-    var jsonDoc = "";
-    function callBackdata2(txt) {
-        var jsonDoc = JSON.parse(txt);
-        var ticks = [[0, "爆炸"], [1, "水災"], [2, "乾旱"], [3, "恐攻"], [4, "戰爭"], [5,"抗議" ]];
-        $(document).ready(function() {
-            var barOptions = {
+
+  var jsonDoc = "";
+  function callBackdata2(txt) {
+    var jsonDoc = JSON.parse(txt);
+
+//var FlotLineChartValue = '{"台灣":[[0,5],[1,8],[2,0],[3,6],[4,5],[5,1],[6,2]],"日本":[[0,11],[1,0],[2,4],[3,7],[4,1],[5,5],[6,4]]}';
+//var jsondoc = JSON.parse(FlotLineChartValue);
+var ticks = [[0, "爆炸"], [1, "水災"], [2, "乾旱"], [3, "恐攻"], [4, "戰爭"], [5,"抗議" ]];
+$(document).ready(function() {
+
+    var barOptions = {
                 series: {
                     bars: {
                         show: true,
+                        
                     }
                 },
-                bars:{
-                    align:"center",
-                    barWidth:0.5,
-                    fill:.9
+                bars:{align:"center",
+                      barWidth:0.5,
+                      fill:.9
+
                 },
                 xaxis: {
                     axisLabelUseCanvas: true,
                     ticks:ticks,
                 },
                 yaxis:{
-                    min:0
+                  min:0,
+                  tickDecimals:0,
                 },
+                
                 grid: {
                     color: "#999999",
                     hoverable: true,
                     clickable: true,
                     tickColor: "#D4D4D4",
-                    borderWidth:2
+                    borderWidth:2,
+                    margin: 10,
                 },
                 legend: {
                     show: true,
+
                 },
                 tooltip: true,
                 tooltipOpts: {
                     content: " 次數:%y"
                 }
             };
+
             for (var key in jsonDoc){
                 var data = [
-                    {label:'爆炸',color: '#E32636', data: [jsonDoc[key][0]]},
-                    {label:'水災',color: '#FF4D00', data: [jsonDoc[key][1]]},
-                    {label:'旱災',color: '#FFA500', data: [jsonDoc[key][2]]},
-                    {label:'恐攻',color: '#66FF00', data: [jsonDoc[key][3]]},
-                    {label:'戰爭',color: '#007FFF', data: [jsonDoc[key][4]]},
-                    {label:'抗議',color: '#D94DFF', data: [jsonDoc[key][5]]},];
+                            {label:'爆炸',color: '#ff00aa', data: [jsonDoc[key][0]]},
+                            {label:'水災',color: 'red', data: [jsonDoc[key][1]]},
+                            {label:'旱災',color: 'yellow', data: [jsonDoc[key][2]]},
+                            {label:'恐攻',color: 'orange', data: [jsonDoc[key][3]]},
+                            {label:'戰爭',color: 'blue', data: [jsonDoc[key][4]]},
+                            {label:'抗議',color: 'green', data: [jsonDoc[key][5]]},];
+ 
                 $.plot($("#bar_"+key), data, barOptions);
             }
           
         });
-    };
+};
 </script>
 <script type="text/javascript" src="Bar/callBackdata2.json"></script>
 </body>
