@@ -1,0 +1,960 @@
+<html lang="zh-TW">
+<head>
+	<meta charset="UTF-8">
+	<title>旅遊詐騙</title>
+	<link rel="Shortcut Icon"type="image/x-icon" href="graph/icon.ico">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<script src="https://d3js.org/d3.v3.min.js"></script>
+	<script src="https://d3js.org/topojson.v1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.css">
+	<script src="https://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="https://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<style type="text/css">
+		/*Loading動畫與特效*/
+		h1.ld {
+			font-weight: 900;
+			font-size: 4.5em;
+			color: white;
+			width: 3em;
+			height: 3em;
+			font-family: sans-serif;
+			text-align: center;
+		}
+		.ld .letters {
+			position: absolute;
+			left: 0;
+			right: 0;
+			margin: auto;
+			top: 0;
+			bottom: 0;
+			height: 1em;
+		}
+		.ld .words {
+			position: relative;
+			z-index: 2;
+			display: inline-block;
+			line-height: 0.7em;
+			right: -0.12em;
+			top: -0.2em;
+		}
+		.ld .bang {
+			font-size: 1.4em;
+			top: auto;
+			left: -0.06em;
+		}
+		.ld .circle {
+			position: absolute;
+			left: 0;
+			right: 0;
+			margin: auto;
+			top: 0;
+			bottom: 0;
+		}
+		.ld .circle-white {
+			width: 3em;
+			height: 3em;
+			border: 2px dashed white;
+			border-radius: 2em;
+		}
+		.ld .circle-dark {
+			width: 2.2em;
+			height: 2.2em;
+			background-color: #4f7b86;
+			border-radius: 3em;
+			z-index: 1;
+		}
+		.ld .circle-dark-dashed {
+			border-radius: 2.4em;
+			background-color: transparent;
+			border: 2px dashed #4f7b86;
+			width: 2.4em;
+			height: 2.4em;
+		}
+		.ld-div{
+			width: 100%;
+			height: 100%;
+			background-color:  #98bec8;
+			position: absolute;
+			-webkit-user-select: none;
+			animation-name: loading;
+			animation-duration: 3.5s;
+			animation-iteration-count:1;
+			-webkit-animation-fill-mode:forwards;
+		}
+		@keyframes loading {
+			0% {left: 0%;top:0%;}
+			65% {left: 0%;top:0%;}
+			100% {left: 0%;top:-150%;}
+		}
+		/*側邊標籤列與主頁面特效*/
+		.st-content {
+			height: 100%;
+		}
+		.st-content {
+			overflow-y: scroll;
+			background: white;
+		}
+		.st-content-inner {
+			position: relative;
+		}
+		.st-container {
+			position: relative;
+			overflow: hidden;
+		}
+		.st-pusher {
+			position: relative;
+			left: 0;
+			z-index: 99;
+			-webkit-transition: -webkit-transform 0.5s;
+			transition: transform 0.5s;
+		}
+		.st-pusher:after {
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 0;
+			height: 0;
+			background: rgba(0,0,0,0.2);
+			content: '';
+			opacity: 0;
+			-webkit-transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
+			transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
+		}
+		.st-menu-open .st-pusher:after {
+			width: 100%;
+			height: 100%;
+			opacity: 1;
+			-webkit-transition: opacity 0.5s;
+			transition: opacity 0.5s;
+		}
+		.st-menu {
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 100;
+			visibility: hidden;
+			width: 80%;
+			height: 100%;
+			background: white;
+			-webkit-transition: all 0.5s;
+			transition: all 0.5s;
+		}
+		.st-menu:after {
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0,0,0,0.2);
+			content: '';
+			opacity: 1;
+			-webkit-transition: opacity 0.5s;
+			transition: opacity 0.5s;
+		}
+		.st-menu-open .st-menu:after {
+			width: 0;
+			height: 0; 
+			opacity: 0;
+			-webkit-transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
+			transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
+		}
+		.st-menu ul {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		.st-menu h2 {
+			margin: 0;
+			padding: 1em;
+			color: rgba(0,0,0,0.4);
+			text-shadow: 0 0 1px rgba(0,0,0,0.1);
+			font-weight: 500;
+			font-size: 28px;
+		}
+		.st-menu ul li a {
+			display: block;
+			padding: 1em 1em 1em 1.2em;
+			outline: none;
+			box-shadow: inset 0 -1px rgba(0,0,0,0.2);
+			color: black;
+			font-size: 60px;
+			text-transform: uppercase;
+			text-shadow: 0 0 1px rgba(255,255,255,0.1);
+			letter-spacing: 1px;
+			font-weight: 500;
+			-webkit-transition: background 0.3s, box-shadow 0.3s;
+			transition: background 0.3s, box-shadow 0.3s;
+		}
+		.st-menu ul li:first-child a {
+			box-shadow: inset 0 -1px rgba(0,0,0,0.2), inset 0 1px rgba(0,0,0,0.2);
+		}
+		.st-menu ul li a:hover {
+			background: rgba(0,0,0,0.2);
+			box-shadow: inset 0 -1px rgba(0,0,0,0);
+			color: black;
+		}
+		.st-effect-9.st-container {
+			-webkit-perspective: 1500px;
+			perspective: 1500px;
+		}
+		.st-effect-9 .st-pusher {
+			-webkit-transform-style: preserve-3d;
+			transform-style: preserve-3d;
+		}
+		.st-effect-9.st-menu-open .st-pusher {
+			-webkit-transform: translate3d(0, 0, -300px);
+			transform: translate3d(0, 0, -300px);
+		}
+		.st-effect-9.st-menu {
+			opacity: 1;
+			-webkit-transform: translate3d(-100%, 0, 0);
+			transform: translate3d(-100%, 0, 0);
+		}
+		.st-effect-9.st-menu-open .st-effect-9.st-menu {
+			background-color: white;
+			visibility: visible;
+			-webkit-transition: -webkit-transform 0.5s;
+			transition: transform 0.5s;
+			-webkit-transform: translate3d(0, 0, 0);
+			transform: translate3d(0, 0, 0);
+		}
+		.st-effect-9.st-menu:after {
+			background-color: #4682B4;
+			display: none;
+		}
+		body {
+			background: #444;
+			color: white;
+			font-weight: 500;
+			font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;
+		}
+		a {
+			text-decoration: none;
+			color: black;
+			outline: none;
+		}
+		a:hover, a:focus {
+			color:black;
+			outline: none;
+			text-decoration:none;
+		}
+		.codrops-header {
+			position: fixed;
+			height: 100PX;
+			width: 99.1%;
+			background-color: white;
+			padding-top: 0.8em;
+		}
+		.codrops-header h1 {
+			position: relative;
+			left: 165px;
+			margin: 0;
+			font-weight: 500;
+			font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;
+			font-size: 50px;
+			color: white;
+			line-height: 1.3;
+			-webkit-user-select: none;
+			float: left;
+		}
+		.codrops-header h2 {
+			position: relative;
+			right: 15px;
+			padding-top: 10px;
+			margin: 0;
+			font-weight: 500;
+			font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;
+			font-size: 35px;
+			color: white;
+			line-height: 1.3;
+			-webkit-user-select: none;
+			float: right;
+		}
+		.codrops-header span {
+			font-size: 60%;
+			color: black;
+		}
+		.main {
+			max-width: 69em;
+			margin: 0 auto;
+		}
+		button {
+			position: absolute;
+			left: 15px;
+			border: none;
+			background: none;
+			color: black;
+			padding: 0px 12px 0px 13px;
+			font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;
+			font-size: 50px;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+			cursor: pointer;
+			display: inline-block;
+			border-radius: 5px;
+			outline: none
+		}
+		button:hover {
+			background: white;
+			color: #4682B4;
+		}
+		/*標題標籤*/
+		.ul1 .a1{
+			background-color: black;
+			color: white;
+			width: 250px;
+			font-size: 25px;
+			font-weight: 100;
+			text-align: center;
+			border: 2px solid #00000000;
+			border-radius: 15px;
+			-webkit-user-select: none;
+			float: left;
+		}
+		.ul1 .a1:hover {
+			background-color: white;
+			color: black;
+		}
+		.li{
+			list-style-type :none;
+			height: 0px;
+		}
+		/*圖片*/
+		.img_big {
+			overflow:hidden;
+		}
+		.img_big img{
+			transform:scale(1,1);
+			transition: all 1s ease-out;
+		}
+		.img_big img:hover {
+			transform:scale(1.5,1.5);
+		}
+	</style>
+</head>
+<body>
+	<div id="st-container" class="st-container">
+		<nav class="st-menu st-effect-9" id="menu-9"> <!--側邊標籤列-->
+			<h2 style="-webkit-user-select: none;">World in My Hand</h2>
+			<ul>
+				<li><a href="m.Homepage.html"rel="external">※ 首頁</a></li>
+				<li><a href="m.Page2.html"rel="external">※ 旅遊詐騙</a></li>
+				<li><a href="m.About.html"rel="external">※ 關於我們</a></li>
+			</ul>
+		</nav>
+		<div class="st-pusher"> 
+			<div class="st-content">
+				<div class="ld-div"style="z-index: 3"> <!--Load畫面-->
+					<h1 class="ld">
+						<span class="letters">
+							<span class="words letters-left">Welcome</span>
+							<span class="words bang">!</span>
+						</span>
+						<span class="circle circle-white"></span>
+						<span class="circle circle-dark"></span>
+						<span class="circle circle-container">
+							<span class="circle circle-dark-dashed"></span>
+						</span>
+					</h1>
+				</div>
+				<div class="st-content-inner"style="z-index: 2"id="top"> <!--置頂標籤列-->
+					<header class="codrops-header"style="padding-top: 13.6px;">
+						<button data-effect="st-effect-9"id="btn"style="-webkit-user-select: none;">☰</button>
+						<h1><a href="Homepage.html"rel="external"><img src="graph/logo.png"width="50"> World in My Hand<span>　HOLD住全世界</span></a></h1>
+					</header>
+				</div>
+				<div data-role="page" id="pageone">
+					<center style="padding-top: 80px;">
+						<div style="width: 400px;height: 100px;margin-top: 100px;background-color: #2d6094;font-weight: 700;font-size: 65px;color: white;font-family: 'Lato', Calibri, Arial, sans-serif,Microsoft JhengHei;-webkit-user-select: none;border-radius: 15px;">旅遊詐騙
+						</div>
+					</center>
+					<div data-role="main" class="ui-content"style="height: 100%;padding-top: 10%;">
+						<div class="img_big"style="float: left;width: 100%;height: 50%;text-align: center;border-bottom:2px black solid;">
+							<div style="padding-top: 15%;padding-bottom: 17%">
+								<a href="#pagetwo"data-transition="pop">
+									<img src="graph/youtube.png"width="200">
+									<p>Youtube</p>
+								</a>
+							</div>
+						</div>
+						<div class="img_big"style="float: left;width: 100%;height: 50%;text-align: center;">
+							<div style="padding-top: 32%">
+								<a href="#pagethree"data-transition="pop">
+									<img src="graph/article.png"width="200">
+									<p>文章</p>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--Youtube-->
+				<div data-role="page" id="pagetwo">
+					<div style="padding-top: 80px;"></div>
+					<center data-role="main" class="ui-content"style="height: 100%;">
+						<div style="float: left;width: 100%;height: 25%;">
+							<a href="#pagefour"data-transition="pop">
+								<div style="width: 270px;height: 270px;border-radius: 999em;background-color:#2d6094;text-align: center;">
+									<p style="padding-top: 35%;color: white;font-size: 32px;"><b>歐洲<br>（Europe）</b></p>
+								</div>
+							</a>
+						</div>
+						<div style="float: left;width: 100%;height: 25%;">
+							<a href="#pagefive"data-transition="pop">
+								<div style="width: 270px;height: 270px;border-radius: 999em;background-color:#2d6094;text-align: center;">
+									<p style="padding-top: 35%;color: white;font-size: 32px;"><b>東南亞<br>（Southeast Asia）</b></p>
+								</div>
+							</a>
+						</div>
+						<div style="float: left;width: 100%;height: 25%;">
+							<a href="#pagesix"data-transition="pop">
+								<div style="width: 270px;height: 270px;border-radius: 999em;background-color:#2d6094;text-align: center;">
+									<p style="padding-top: 35%;color: white;font-size: 32px;"><b>東亞<br>（East Asia）</b></p>
+								</div>
+							</a>
+						</div>
+						<div style="float: left;width: 100%;height: 25%;">
+							<a href="#pageseven"data-transition="pop">
+								<div style="width: 270px;height: 270px;border-radius: 999em;background-color:#2d6094;text-align: center;">
+									<p style="padding-top: 35%;color: white;font-size: 32px;"><b>非洲<br>（Africa）</b></p>
+								</div>
+							</a>
+						</div>
+						<div style="float: right;width:100%;">
+							<br><br><br>
+							<div style="width: 200px;height: 50px;border-radius: 999em;background-color:#b53c3c;text-align: center;">
+								<a href="#pageone"><p style="color: white;font-size: 32px;padding-top: 5px;margin-top: 5px;">回到上一頁</p></a>
+							</div>
+						</div>
+					</center>
+				</div>
+				<!--Youtube的影片-->
+				<div data-role="page" id="pagefour">
+					<div style="padding-top: 80px;"></div>
+					<div data-role="main" class="ui-content"style="height: 100%;">
+						<div style="font-size: 30px;color: black;width: 100%;float: left;"><!--影片1-->
+							<center>
+								<b><p>末羊子 dontkjoanne<br>歐洲旅遊⋯防盜藏錢的各種建議</p></b><br>
+								<div style="border-color: white;border-style: solid;width: 566px;height: 321px;">
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/BDQw2Og_RXc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+							</center>
+						</div>
+						<div style="font-size: 30px;color: black;width:100%;float: left;"><!--影片2-->
+							<center>
+								<b><p>PUKA頻道<br>歐洲｜法國巴黎｜自己被搶過才知道恐怖</p></b><br>
+								<div style="border-color: white;border-style: solid;width: 566px;height: 321px;">
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/7r_crZVj6tU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+							</center>
+						</div>
+						<div style="font-size: 30px;color: black;width: 100%;float: left;"><!--影片3-->
+							<center>
+								<b><p>Willy Lee<br>🇫🇷 帶大家感受下巴黎三大街頭騙案<br>法國巴黎特別篇</p></b>
+								<div style="border-color: white;border-style: solid;width: 566px;height: 321px;">
+										<iframe width="560" height="315" src="https://www.youtube.com/embed/iwnL9GShChI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+									</div>
+							</center>
+						</div>
+						<hr>
+						<div style="font-size: 30px;color: black;width: 100%;float: left;"><!--影片4-->
+							<center>
+								<b><p>USTV 非凡電視<br>破解歐洲扒手三大招數！ 教你如何自保？</p></b>
+								<div style="border-color: white;border-style: solid;width: 566px;height: 321px;">
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/Uvs_d_BwmtE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+							</center>
+						</div>
+						<div style="font-size: 30px;color: black;width:100%;float: left;"><!--影片5-->
+							<center>
+								<b><p>BARZA<br>巴塞隆納防盜秘笈｜西班牙旅行、留學必看</p></b>
+								<div style="border-color: white;border-style: solid;width: 566px;height: 321px;">
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/FsCcet1F-uU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+							</center>
+						</div>
+					</div>
+				</div>
+				<div data-role="page" id="pagefive">
+					<div style="padding-top: 80px;"></div>
+					<div data-role="main" class="ui-content"style="height: 100%;">
+						<div style="font-size: 30px;color: black;width: 100%;float: left;"><!--影片1-->
+							<center>
+								<b><p>Spice TW<br>不騎機車泰國其實不危險！</p></b><br>
+								<div style="border-color: white;border-style: solid;width: 566px;height: 321px;">
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/NrNoOqjJFTs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+							</center>
+						</div>
+						<div style="font-size: 30px;color: black;width: 100%;float: left;"><!--影片2-->
+							<center>
+								<b><p>泰友趣Thai Funny<br>泰國旅遊.泰國禁忌終極版<br>撒白亂亂講.泰友趣.曼谷</p></b>
+								<div style="border-color: white;border-style: solid;width: 566px;height: 321px;">
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/gca5v_NxIkE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+							</center>
+						</div>
+						<div style="font-size: 30px;color: black;width: 100%;float: left;"><!--影片3-->
+							<center>
+								<b><p>Rose M<br>【旅遊】去越南不可不知的五件事！</p></p></b><br>
+								<div style="border-color: white;border-style: solid;width: 566px;height: 321px;">
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/-Lc8zT25Law" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+							</center>
+						</div>
+						<div style="font-size: 30px;color: black;width: 100%;float: left;"><!--影片4-->
+							<center>
+								<b><p>旅行思維 Keep Traveling<br>來越南要小心這18種旅遊陷阱（上集）</p></b>
+								<div style="border-color: white;border-style: solid;width: 566px;height: 321px;">
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/RE-Xf0WhwNo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+							</center>
+						</div>
+						<div style="font-size: 30px;color: black;width: 100%;float: left;"><!--影片5-->
+							<center>
+								<b><p>旅行思維 Keep Traveling<br>來越南要小心這18種旅遊陷阱（下集）</p></b>
+								<div style="border-color: white;border-style: solid;width: 566px;height: 321px;">
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/EVU065jEn68" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+							</center>
+						</div>
+						<div style="font-size: 30px;color: black;width: 100%;float: left;"><!--影片6-->
+							<center>
+								<b><p>狐搞蝦搞Hoogashaga<br>泰國唐人街遇到詐騙集團</p></b>
+								<div style="border-color: white;border-style: solid;width: 566px;height: 321px;">
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/l9afvt7p1XQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+							</center>
+						</div>
+						<div style="font-size: 30px;color: black;width: 100%;float: left;"><!--影片7-->
+							<center>
+								<b><p>超級旅行者<br>印度孟買／必訪「賊市Chor Bazaar」小偷市集</p></b>
+								<div style="border-color: white;border-style: solid;width: 566px;height: 321px;">
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/SiHKJClejek" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+							</center>
+						</div>
+						<div style="font-size: 30px;color: black;width: 100%;float: left;"><!--影片8-->
+							<center>
+								<b><p>RewindLai賴勇霖影像日記<br>【越南旅遊】她想騙我的錢！</p></b>
+								<div style="border-color: white;border-style: solid;width: 566px;height: 321px;">
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/g_2ywfbqI_Y" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+							</center>
+						</div>
+						<div style="font-size: 30px;color: black;width: 100%;float: left;"><!--影片9-->
+							<center>
+								<b><p><p>旅行思維 Keep Traveling<br>來馬來西亞要小心這20種旅遊陷阱（上集）</p></p></b>
+								<div style="border-color: white;border-style: solid;width: 566px;height: 321px;">
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/g8lNInz8_s8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+							</center>
+						</div>
+						<div style="font-size: 30px;color: black;width: 100%;float: left;"><!--影片10-->
+							<center>
+								<b><p>旅行思維 Keep Traveling<br>來馬來西亞要小心這20種旅遊陷阱（下集）</p></b>
+								<div style="border-color: white;border-style: solid;width: 566px;height: 321px;">
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/hmKmdsWweag" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+							</center>
+						</div>
+						<div style="float: left;width: 35%;height: 100px;margin-left: 40%;">
+							<br>
+							<div style="width: 200px;height: 50px;border-radius: 999em;background-color:#b53c3c;text-align: center;margin-bottom: 100px;">
+								<a href="#pagetwo"><p style="color: white;font-size: 32px;padding-top: 5px;margin-top: 5px;">回到上一頁</p></a>
+							</div>
+							<br>
+						</div>
+					</div>
+				</div>
+				<div data-role="page" id="pagesix">
+					<div style="padding-top: 80px;"></div>
+					<div data-role="main" class="ui-content"style="height: 100%;">
+						<div style="font-size: 30px;color: black;width: 100%;float: left;"><!--影片4-->
+							<center>
+								<b><p>ChinWoon正雯<br>上海旅游遇到扒手</p></b>
+								<div style="border-color: white;border-style: solid;width: 566px;height: 321px;">
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/qrWVaZ8Rvh4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+							</center>
+						</div>
+						<div style="font-size: 30px;color: black;width: 100%;float: left;"><!--影片5-->
+							<center>
+								<b><p>旅行思維 Keep Traveling<br>來日本要小心這13種旅遊陷阱</p></b>
+								<div style="border-color: white;border-style: solid;width: 566px;height: 321px;">
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/bfn1XQvGfDQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+							</center>
+						</div>
+						<div style="float: left;width: 35%;height: 100px;margin-left: 40%;">
+							<br>
+							<div style="width: 200px;height: 50px;border-radius: 999em;background-color:#b53c3c;text-align: center;margin-bottom: 100px;">
+								<a href="#pagetwo"><p style="color: white;font-size: 32px;padding-top: 5px;margin-top: 5px;">回到上一頁</p></a>
+							</div>
+							<br>
+						</div>
+					</div>
+				</div>
+				<div data-role="page" id="pageseven">
+					<div style="padding-top: 80px;"></div>
+					<div data-role="main" class="ui-content"style="height: 100%;">
+						<div style="font-size: 30px;color: black;"><!--影片4-->
+							<center>
+								<b><p>托哥torres<br>南非小偷是這樣搶東西的！</p></b>
+								<div style="border-color: white;border-style: solid;width: 566px;height: 321px;">
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/27xwgqfbpO4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+							</center>
+						</div>
+						<div style="float: left;width: 35%;height: 100px;margin-left: 40%;">
+							<br>
+							<div style="width: 200px;height: 50px;border-radius: 999em;background-color:#b53c3c;text-align: center;margin-bottom: 100px;">
+								<a href="#pagetwo"><p style="color: white;font-size: 32px;padding-top: 5px;margin-top: 5px;">回到上一頁</p></a>
+							</div>
+							<br>
+						</div>
+					</div>
+				</div>
+				<!--文章-->
+				<div data-role="page" id="pagethree">
+					<div style="padding-top: 80px;"></div>
+					<center data-role="main" class="ui-content"style="height: 100%;">
+						<div style="float: left;width: 50%;">
+							<a href="#pageeight"data-transition="pop">
+								<div style="width: 270px;height: 270px;border-radius: 999em;background-color:#2d6094;text-align: center;">
+									<p style="padding-top: 35%;color: white;font-size: 32px;"><b>歐洲<br>（Europe）</b></p>
+								</div>
+							</a>
+						</div>
+						<div style="float: left;width: 50%;">
+							<a href="#pagenine"data-transition="pop">
+								<div style="width: 270px;height: 270px;border-radius: 999em;background-color:#2d6094;text-align: center;">
+									<p style="padding-top: 35%;color: white;font-size: 32px;"><b>東南亞<br>（Southeast Asia）</b></p>
+								</div>
+							</a>
+						</div>
+						<div style="float: left;width: 50%;">
+							<a href="#pageten"data-transition="pop">
+								<div style="width: 270px;height: 270px;border-radius: 999em;background-color:#2d6094;text-align: center;">
+									<p style="padding-top: 35%;color: white;font-size: 32px;"><b>南亞<br>（South Asia）</b></p>
+								</div>
+							</a>
+						</div>
+						<div style="float: left;width: 50%;">
+							<a href="#pageeleven"data-transition="pop">
+								<div style="width: 270px;height: 270px;border-radius: 999em;background-color:#2d6094;text-align: center;">
+									<p style="padding-top: 35%;color: white;font-size: 32px;"><b>西亞<br>（West Asia）</b></p>
+								</div>
+							</a>
+						</div>
+						<div style="float: left;width: 50%;">
+							<a href="#pagetwelve"data-transition="pop">
+								<div style="width: 270px;height: 270px;border-radius: 999em;background-color:#2d6094;text-align: center;">
+									<p style="padding-top: 35%;color: white;font-size: 32px;"><b>東亞<br>（Eest Asia）</b></p>
+								</div>
+							</a>
+						</div>
+						<div style="float: left;width: 50%;">
+							<a href="#pagethirteen"data-transition="pop">
+								<div style="width: 270px;height: 270px;border-radius: 999em;background-color:#2d6094;text-align: center;">
+									<p style="padding-top: 35%;color: white;font-size: 32px;"><b>非洲<br>（Africa）</b></p>
+								</div>
+							</a>
+						</div>
+						<div style="float: left;width: 50%;">
+							<a href="#pagefourteen"data-transition="pop">
+								<div style="width: 270px;height: 270px;border-radius: 999em;background-color:#2d6094;text-align: center;">
+									<p style="padding-top: 35%;color: white;font-size: 32px;"><b>大洋洲<br>（Oceania）</b></p>
+								</div>
+							</a>
+						</div>
+						<div style="float: right;width:50%;">
+							<br><br><br><br><br><br>
+							<div style="width: 200px;height: 50px;border-radius: 999em;background-color:#b53c3c;text-align: center;">
+								<a href="#pageone"><p style="color: white;font-size: 32px;padding-top: 5px;margin-top: 5px;">回到上一頁</p></a>
+							</div>
+						</div>
+					</center>
+				</div>
+				<!--文章的文章-->
+				<div data-role="page" id="pageeight">
+					<div style="padding-top: 80px;"></div>
+					<div data-role="main" class="ui-content"style="height: 100%;">
+						<div style="font-size: 30px;color: black;"><!--影片4-->
+							<center>
+								<div style="height: 540px;"><b>
+									<p>PTT - 冰島詐騙飯店 north star <a href="https://www.ptt.cc/bbs/EuropeTravel/M.1571306093.A.362.html"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>PTT - 巴黎治安-騙術大對決！ <a href="https://www.ptt.cc/bbs/France/M.1336912808.A.528.html"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>PTT - 巴黎車站買票詐騙 <a href="https://www.ptt.cc/bbs/EuropeTravel/M.1338260102.A.26B.html"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>PTT - 布達佩斯新騙術-假溫泉票 <a href="https://www.ptt.cc/bbs/EuropeTravel/M.1422666068.A.316.html"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>PTT - 法國 巴黎的各種集團(扒手與騙子) <a href="https://www.ptt.cc/bbs/EuropeTravel/M.1344615968.A.657.html"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>PTT - 法國巴黎北站恐怖經驗 <a href="https://www.ptt.cc/bbs/EuropeTravel/M.1454444758.A.10F.html"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>PTT - 倫敦治安-遇到金光黨 詐騙手法請注意 <a href="https://www.ptt.cc/bbs/EuropeTravel/M.1438130098.A.EF0.html"target="_blank"><img src="graph/link.png"width="50"></a></p>
+								</b></div>
+								<div style="height: 220px;"><b>
+									<p>Dcard - 歐洲各種偷拐搶騙 <a href="https://www.dcard.tw/f/travel/p/150431291"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>Dcard - 趴兔-歐洲各種偷拐搶騙 <a href="https://www.dcard.tw/f/travel/p/224313262"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>Dcard - #英國#自助旅遊真的要小心 <a href="https://www.dcard.tw/f/travel/p/226996026"target="_blank"><img src="graph/link.png"width="50"></a></p>
+								</b></div>
+								<hr>
+								<div style="height: 460px;"><b>
+									<p>背包客棧 - 揭露巴黎8種最常見的扒手及各種詐騙手法 <a href="https://www.backpackers.com.tw/forum/showthread.php?t=1869617"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>背包客棧 - 我在義大利被詐騙700歐，各位旅人小心！ <a href="https://www.backpackers.com.tw/forum/showthread.php?t=10026794"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>背包客棧 - 一個人 九十天歐洲旅--德國 法蘭克福遇到詐騙 <a href="https://www.backpackers.com.tw/forum/showthread.php?t=1366276"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>背包客棧 - 柏林詐騙分享 <a href="https://www.backpackers.com.tw/forum/showthread.php?t=1513212"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>背包客棧 - 在布拉格請注意集團式的竊盜和詐騙手段 <a href="https://www.backpackers.com.tw/forum/showthread.php?t=1478487"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>背包客棧 - 冰島旅行租車被坑殺驚魂錄……小心！ <a href="https://www.backpackers.com.tw/forum/showthread.php?t=10175071"target="_blank"><img src="graph/link.png"width="50"></a></p>
+								</b></div>
+								<hr>
+								<div style="height: 60px;"><b>
+									<p>蘇菲親子旅行趣 - 街頭常見扒手及騙術招數大公開！ <a href="https://sophiee.tw/europe-travel-theft/"target="_blank"><img src="graph/link.png"width="50"></a></p>
+								</b></div>
+								<hr>
+								<div style="height: 60px;"><b>
+									<p>Gramha - 出國遇到 #搶劫 #偷竊 都要靠自己💪 <a href="https://gramha.net/media/1914481144817470503"target="_blank"><img src="graph/link.png"width="50"></a></p>
+								</b></div>
+							</center>
+						</div>
+						<div style="float: left;width: 35%;height: 100px;margin-left: 40%;">
+							<br>
+							<div style="width: 200px;height: 50px;border-radius: 999em;background-color:#b53c3c;text-align: center;margin-bottom: 100px;">
+								<a href="#pagethree"><p style="color: white;font-size: 32px;padding-top: 5px;margin-top: 5px;">回到上一頁</p></a>
+							</div>
+							<br>
+						</div>
+					</div>
+				</div>
+				<div data-role="page" id="pagenine">
+					<div style="padding-top: 80px;"></div>
+					<div data-role="main" class="ui-content"style="height: 100%;">
+						<div style="font-size: 30px;color: black;">
+							<center>
+								<div style="height: 540px;"><b>
+									<p>PTT - 小心同顏色的越幣騙局 <a href="https://www.ptt.cc/bbs/Vietnam/M.1571097082.A.C50.html"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>PTT - 越南偷搶拐騙 <a href="https://www.ptt.cc/bbs/Vietnam/M.1571323650.A.795.html"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>PTT - 注意河內國際線機場的詐騙集團 <a href="https://www.ptt.cc/man/Vietnam/DB2E/M.1496849026.A.E43.html"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>PTT - 被越南公安勒索了100美金！！ <a href="https://www.ptt.cc/bbs/Vietnam/M.1551701304.A.49A.html"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>PTT - 朋友的哀鳳在越南被飛車搶劫了！！ <a href="https://www.ptt.cc/bbs/Gossiping/M.1552049903.A.E24.html"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>PTT - 被白牌計程車司機詐騙 <a href="https://www.ptt.cc/man/Vietnam/DB2E/D3BD/M.1522746058.A.334.html"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>PTT - 越南搭車詐騙分享 越南搭計程車注意事項 <a href="https://www.ptt.cc/bbs/Vietnam/M.1546703215.A.472.html"target="_blank"><img src="graph/link.png"width="50"></a></p>
+								</b></div>
+								<div style="height: 130px;"><b>
+									<p>Dcard - 泰國芭達雅遭竊 <a href="https://www.dcard.tw/f/trending/p/224834534"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>Dcard - 去泰國旅行女生必注意！ <a href="https://www.dcard.tw/f/girl/p/226091783"target="_blank"><img src="graph/link.png"width="50"></a></p>
+								</b></div>
+								<hr>
+								<div style="height: 130px;"><b>
+									<p>背包客棧 - 馬來西亞詐騙集團！！ <a href="https://www.backpackers.com.tw/forum/showthread.php?t=506033"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>背包客棧 - 小心別遇上吉隆坡詐騙 <a href="https://www.backpackers.com.tw/forum/showthread.php?t=10221732"target="_blank"><img src="graph/link.png"width="50"></a></p>
+								</b></div>
+							</center>
+						</div>
+						<div style="float: left;width: 35%;height: 100px;margin-left: 40%;">
+							<br>
+							<div style="width: 200px;height: 50px;border-radius: 999em;background-color:#b53c3c;text-align: center;margin-bottom: 100px;">
+								<a href="#pagethree"><p style="color: white;font-size: 32px;padding-top: 5px;margin-top: 5px;">回到上一頁</p></a>
+							</div>
+							<br>
+						</div>
+					</div>
+				</div>
+				<div data-role="page" id="pageten">
+					<div style="padding-top: 80px;"></div>
+					<div data-role="main" class="ui-content"style="height: 100%;">
+						<div style="font-size: 30px;color: black;">
+							<center>
+								<div style="height: 60px;"><b>
+									<p>背包客棧 - 斯里蘭卡｜旅行詐騙故事 <a href="https://www.backpackers.com.tw/forum/showthread.php?t=10014058"target="_blank"><img src="graph/link.png"width="50"></a></p>
+								</b></div>
+							</center>
+						</div>
+						<div style="float: left;width: 35%;height: 100px;margin-left: 40%;">
+							<br>
+							<div style="width: 200px;height: 50px;border-radius: 999em;background-color:#b53c3c;text-align: center;margin-bottom: 100px;">
+								<a href="#pagethree"><p style="color: white;font-size: 32px;padding-top: 5px;margin-top: 5px;">回到上一頁</p></a>
+							</div>
+							<br>
+						</div>
+					</div>
+				</div>
+				<div data-role="page" id="pageeleven">
+					<div style="padding-top: 80px;"></div>
+					<div data-role="main" class="ui-content"style="height: 100%;">
+						<div style="font-size: 30px;color: black;">
+							<center>
+								<div style="height: 60px;"><b>
+									<p>背包客棧 - 土耳其〔騙術、偷竊、脅迫〕旅行風險討論串 <a href="https://www.backpackers.com.tw/forum/showthread.php?t=2837&page=10"target="_blank"><img src="graph/link.png"width="50"></a></p>
+								</b></div>
+							</center>
+						</div>
+						<div style="float: left;width: 35%;height: 100px;margin-left: 40%;">
+							<br>
+							<div style="width: 200px;height: 50px;border-radius: 999em;background-color:#b53c3c;text-align: center;margin-bottom: 100px;">
+								<a href="#pagethree"><p style="color: white;font-size: 32px;padding-top: 5px;margin-top: 5px;">回到上一頁</p></a>
+							</div>
+							<br>
+						</div>
+					</div>
+				</div>
+				<div data-role="page" id="pagetwelve">
+					<div style="padding-top: 80px;"></div>
+					<div data-role="main" class="ui-content"style="height: 100%;">
+						<div style="font-size: 30px;color: black;">
+							<center>
+								<div style="height: 380px;"><b>
+									<p>Dcard - #首爾弘大 路人搭訕請大家要注意提高警覺 <a href="https://www.dcard.tw/f/travel/p/225881915?ref=ios"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>Dcard - #首爾 請隨時提高自己的警覺 <a href="https://www.dcard.tw/f/travel/p/224398842-%EF%BC%83%E5%88%86%E4%BA%AB-%EF%BC%83%E9%A6%96%E7%88%BE-%E8%AB%8B%E9%9A%A8%E6%99%82%E6%8F%90%E9%AB%98%E8%87%AA%E5%B7%B1%E7%9A%84%E8%AD%A6%E8%A6%BA"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>Dcard - #黑特 來韓國玩的時候要小心 <a href="https://www.dcard.tw/f/travel/p/225770032-%EF%BC%83%E9%BB%91%E7%89%B9-%E4%BE%86%E9%9F%93%E5%9C%8B%E7%8E%A9%E7%9A%84%E6%99%82%E5%80%99%E8%A6%81%E5%B0%8F%E5%BF%83"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>Dcard - 注意⚠️東京旅遊小心詐騙 <a href="https://www.dcard.tw/f/travel/p/230344524"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>Dcard - 中國領事館詐騙電話 <a href="https://www.dcard.cc/f/studyabroad/p/230065509"target="_blank"><img src="graph/link.png"width="50"></a></p>
+								</b></div>
+								<hr>
+								<div style="height: 300px;"><b>
+									<p>背包客棧 - 機場 詐騙（成都機場） <a href="https://www.backpackers.com.tw/forum/showthread.php?t=1280325"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>背包客棧 - 上海的詐騙多出門要小心 <a href="https://www.backpackers.com.tw/forum/showthread.php?t=10084115"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>背包客棧 - 換錢詐騙手法（上海） <a href="https://www.backpackers.com.tw/forum/showthread.php?t=1732519"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>背包客棧 - 2016提醒背包客上海機場詐騙 <a href="https://www.backpackers.com.tw/forum/showthread.php?t=1849815"><img src="graph/link.png"width="50"></a></p>
+								</b></div>
+							</center>
+						</div>
+						<div style="float: left;width: 35%;height: 100px;margin-left: 40%;">
+							<br>
+							<div style="width: 200px;height: 50px;border-radius: 999em;background-color:#b53c3c;text-align: center;margin-bottom: 100px;">
+								<a href="#pagethree"><p style="color: white;font-size: 32px;padding-top: 5px;margin-top: 5px;">回到上一頁</p></a>
+							</div>
+							<br>
+						</div>
+					</div>
+				</div>
+				<div data-role="page" id="pagethirteen">
+					<div style="padding-top: 80px;"></div>
+					<div data-role="main" class="ui-content"style="height: 100%;">
+						<div style="font-size: 30px;color: black;">
+							<center>
+								<div style="height: 60px;"><b>
+									<p>Dcard - #旅行途中的恐怖經歷 #南非Kurger Park <a href="https://www.dcard.tw/f/travel/p/224470843"target="_blank"><img src="graph/link.png"width="50"></a></p>
+								</b></div>
+								<hr>
+								<div style="height: 60px;"><b>
+									<p>D 深卡 - 台灣人最好別去南非 <a href="https://tw.observer/p/226670549"target="_blank"><img src="graph/link.png"width="50"></a></p>
+								</b></div>
+								<hr>
+								<div style="height: 220px;"><b>
+									<p>背包客棧 - 〔分享〕南非開普敦街頭詐騙手法 <a href="https://www.backpackers.com.tw/forum/showthread.php?t=10288711"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>背包客棧 - 開羅性騷擾及詐騙經驗分享 <a href="https://www.backpackers.com.tw/forum/showthread.php?t=10029565"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>背包客棧 - 關於，埃及騙子的小事！ <a href="https://www.backpackers.com.tw/forum/showthread.php?t=1134571"target="_blank"><img src="graph/link.png"width="50"></a></p>
+								</b></div>
+							</center>
+						</div>
+						<div style="float: left;width: 35%;height: 100px;margin-left: 40%;">
+							<br>
+							<div style="width: 200px;height: 50px;border-radius: 999em;background-color:#b53c3c;text-align: center;margin-bottom: 100px;">
+								<a href="#pagethree"><p style="color: white;font-size: 32px;padding-top: 5px;margin-top: 5px;">回到上一頁</p></a>
+							</div>
+							<br>
+						</div>
+					</div>
+				</div>
+				<div data-role="page" id="pagefourteen">
+					<div style="padding-top: 80px;"></div>
+					<div data-role="main" class="ui-content"style="height: 100%;">
+						<div style="font-size: 30px;color: black;">
+							<center>
+								<div style="height: 130px;"><b>
+									<p>Dcard - 在澳洲遇到的搶劫事件 <a href="https://www.dcard.tw/f/studyabroad/p/202523"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>Dcard - 峇里島小偷真的很厚臉皮！！ <a href="https://www.dcard.tw/f/mood/p/229131539"target="_blank"><img src="graph/link.png"width="50"></a></p>
+								</b></div>
+								<hr>
+								<div style="height: 130px;"><b>
+									<p>背包客棧 - 小心巴里島換錢詐騙（個人真實經驗與手法分析） <a href="https://www.backpackers.com.tw/forum/showthread.php?t=1134270"target="_blank"><img src="graph/link.png"width="50"></a></p>
+									<p>背包客棧 - 機場搭uber請格外小心注意詐騙（印尼） <a href="https://www.backpackers.com.tw/forum/showthread.php?t=10037301"target="_blank"><img src="graph/link.png"width="50"></a></p>
+								</b></div>
+							</center>
+						</div>
+						<div style="float: left;width: 35%;height: 100px;margin-left: 40%;">
+							<br>
+							<div style="width: 200px;height: 50px;border-radius: 999em;background-color:#b53c3c;text-align: center;margin-bottom: 100px;">
+								<a href="#pagethree"><p style="color: white;font-size: 32px;padding-top: 5px;margin-top: 5px;">回到上一頁</p></a>
+							</div>
+							<br>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		anime.timeline({loop: 1})
+		.add({
+			targets: '.ld .circle-white',
+			scale: [0, 3],
+			opacity: [1, 0],
+			easing: "easeInOutExpo",
+			rotateZ: 360,
+			duration: 1100
+		})
+		.add({
+			targets: '.ld .circle-container',
+			scale: [0, 1],
+			duration: 1100,
+			easing: "easeInOutExpo",
+			offset: '-=1000'
+		})
+		.add({
+			targets: '.ld .circle-dark',
+			scale: [0, 1],
+			duration: 1100,
+			easing: "easeOutExpo",
+			offset: '-=600'
+		})
+		.add({
+			targets: '.ld .letters-left',
+			scale: [0, 1],
+			duration: 1200,
+			offset: '-=550'
+		})
+		.add({
+			targets: '.ld .bang',
+			scale: [0, 1],
+			rotateZ: [45, 15],
+			duration: 1200,
+			offset: '-=1000'
+		})
+		.add({
+			targets: '.ld',
+			opacity: 0,
+			duration: 1000,
+			easing: "easeOutExpo",
+			delay: 1400
+		});
+		anime({
+			targets: '.ld .circle-dark-dashed',
+			rotateZ: 360,
+			duration: 8000,
+			easing: "linear",
+			loop: true
+		});
+
+		var click = document.querySelectorAll('div button');
+		var menu = document.querySelector('#st-container');
+		var pusher = document.querySelector('.st-pusher');
+		var effect;
+		for (var i = 0; i < click.length; i++) {
+			click[i].addEventListener('click', addClass)
+		}
+		pusher.addEventListener('click', closeMenu);
+		function addClass(e) {
+  			effect = e.target.getAttribute('data-effect');
+			menu.classList.toggle(effect);
+			menu.classList.toggle('st-menu-open');
+		}
+		function closeMenu(el) {
+  			if (el.target.classList.contains('st-pusher')) {
+				menu.classList.toggle(effect);
+				menu.classList.toggle('st-menu-open');
+			} 
+		}
+	</script>
+</body>
+</html>
